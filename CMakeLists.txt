@@ -51,6 +51,8 @@ else()
     endif()
 endif()
 
+
+
 target_link_libraries(FinancialAccounting PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 set_target_properties(FinancialAccounting PROPERTIES
