@@ -26,6 +26,11 @@ set(PROJECT_SOURCES
         AboutWindow.cpp
         AboutWindow.h
         AboutWindow.ui
+        FinancialIndicators.h
+        FinancialIndicators.cpp
+        IndicatorsMap.h
+        IndicatorsMap.cpp
+
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
