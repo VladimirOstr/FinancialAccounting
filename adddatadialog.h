@@ -18,10 +18,10 @@ public:
     ~AddDataDialog();
 
 signals:
-    void sendData(QTableWidgetItem *data);
+    void sendData(QString data);
 
-private slots:
-    void on_ButtonSend();
+public slots:
+    void on_buttonBox_accepted();
 
 private:
     Ui::AddDataDialog *ui;

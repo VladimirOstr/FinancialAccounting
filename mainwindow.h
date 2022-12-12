@@ -5,7 +5,7 @@
 #include "AddDataDialog.h"
 #include "GuideWindow.h"
 #include "AboutWindow.h"
-#include "FinancialIndicators.h"
+#include "Project.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,18 +20,13 @@ public:
     ~MainWindow();
 
 public slots:
-    void receiveData(QTableWidgetItem data);
-
-private slots:
-    void on_addDataAction_triggered();
-    void on_guideAction_triggered();
-    void on_aboutAction_triggered();
+    void receiveData(QString data);
 
 private:
     Ui::MainWindow *ui;
     AddDataDialog *_addDataDialog;
     GuideWindow *_guideWindow;
     AboutWindow *_aboutWindow;
-    FinancialIndicators _financialIndicators;
+    Project _indicators;
 };
 #endif // MAINWINDOW_H

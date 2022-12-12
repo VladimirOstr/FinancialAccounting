@@ -6,7 +6,7 @@ AddDataDialog::AddDataDialog(QWidget *parent) :
     ui(new Ui::AddDataDialog)
 {
     ui->setupUi(this);
-    connect(ui->buttonBox, SIGNAL(clicked()), this, SLOT(onButtonSend()));
+    connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(onButtonSend()));
 }
 
 AddDataDialog::~AddDataDialog()
@@ -14,11 +14,7 @@ AddDataDialog::~AddDataDialog()
     delete ui;
 }
 
-void AddDataDialog::on_ButtonSend()
+void AddDataDialog::on_buttonBox_accepted()
 {
-    //QTableWidgetItem *tmp[ui->addDataTableWidget->rowCount()];
-    //for (int i = 0; i <
-      //   ui->addDataTableWidget->rowCount(); i++)
-        //tmp[i] = ui->addDataTableWidget->item(i,1);
-    emit sendData(ui->addDataTableWidget->item(0,1));
+    emit sendData(ui->addDataTableWidget->item(0,1)->text());
 }

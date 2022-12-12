@@ -11,6 +11,7 @@ public:
     FinancialIndicators();
     ~FinancialIndicators();
     void SetIncome(double income);
+    void SetDate(QDate date);
 
 private:
     QDate _date;

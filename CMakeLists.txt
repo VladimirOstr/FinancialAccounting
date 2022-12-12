@@ -28,8 +28,8 @@ set(PROJECT_SOURCES
         AboutWindow.ui
         FinancialIndicators.h
         FinancialIndicators.cpp
-        IndicatorsMap.h
-        IndicatorsMap.cpp
+        Project.h
+        Project.cpp
 
 )
 
