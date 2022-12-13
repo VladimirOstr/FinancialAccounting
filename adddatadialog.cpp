@@ -6,7 +6,7 @@ AddDataDialog::AddDataDialog(QWidget *parent) :
     ui(new Ui::AddDataDialog)
 {
     ui->setupUi(this);
-    connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(onButtonSend()));
+    connect(ui->buttonBox, SIGNAL(accept()), this, SLOT(on_buttonBox_accepted()));
 }
 
 AddDataDialog::~AddDataDialog()
@@ -16,5 +16,14 @@ AddDataDialog::~AddDataDialog()
 
 void AddDataDialog::on_buttonBox_accepted()
 {
-    emit sendData(ui->addDataTableWidget->item(0,1)->text());
+    QStringList data;
+
+    for (int i = 0; i < ui->addDataTableWidget->rowCount(); i++)
+    {
+        QTableWidgetItem *item = ui->addDataTableWidget->item(i,1);
+        if (item != NULL)
+            data.append(ui->addDataTableWidget->item(i,1)->text());
+        delete item;
+    }
+    emit sendData(data);
 }

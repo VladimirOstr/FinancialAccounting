@@ -14,8 +14,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->addDataAction, SIGNAL(triggered()),
             _addDataDialog, SLOT(show()));
-    connect(_addDataDialog, SIGNAL(sendData(QString)),
-            this, SLOT(recieveData(QString)));
+    connect(ui->guideAction, SIGNAL(triggered()),
+            _guideWindow, SLOT(show()));
+    connect(ui->aboutAction, SIGNAL(triggered()),
+            _aboutWindow, SLOT(show()));
+
+    connect(_addDataDialog, SIGNAL(sendData(QStringList)),
+            this, SLOT(recieveData(QStringList)));
 }
 
 MainWindow::~MainWindow()
@@ -23,10 +28,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::receiveData(QString data)
+void MainWindow::receiveData(QStringList data)
 {
-    //QDate date(2022,12,10);
-    //FinancialIndicators financialIndicators(date,data.toDouble(),22,15);
-    //_indicators.SetIndicator(date,financialIndicators);
-    ui->tableWidget->item(0,1)->text() = data;
+    for (int i = 0; i < ui->tableWidget->rowCount(); i++)
+    {
+        ui->tableWidget->item(i,1)->setText(data.at(i));
+    }
 }

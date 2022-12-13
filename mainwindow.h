@@ -20,13 +20,13 @@ public:
     ~MainWindow();
 
 public slots:
-    void receiveData(QString data);
+    void receiveData(QStringList data);
 
 private:
     Ui::MainWindow *ui;
     AddDataDialog *_addDataDialog;
     GuideWindow *_guideWindow;
     AboutWindow *_aboutWindow;
-    Project _indicators;
+    Project *_indicators;
 };
 #endif // MAINWINDOW_H

@@ -18,13 +18,17 @@ public:
     ~AddDataDialog();
 
 signals:
-    void sendData(QString data);
+    void sendData(QStringList data);
+
+private slots:
+    void TableChanged(QStringList data);
 
 public slots:
     void on_buttonBox_accepted();
 
 private:
     Ui::AddDataDialog *ui;
+    QStringList data;
 };
 
 #endif // ADDDATADIALOG_H
