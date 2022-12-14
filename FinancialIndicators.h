@@ -7,11 +7,11 @@ class FinancialIndicators
 {
 public:
     FinancialIndicators(QDate date, double income,
-                        double consumption, double total);
+                        double consumption);
     FinancialIndicators();
     ~FinancialIndicators();
-    void SetIncome(double income);
-    void SetDate(QDate date);
+    static FinancialIndicators ToFinancialIndicators(QStringList *indicatorsStringList);
+    QDate GetDate();
 
 private:
     QDate _date;

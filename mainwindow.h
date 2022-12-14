@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QString>
 #include "AddDataDialog.h"
 #include "GuideWindow.h"
 #include "AboutWindow.h"
@@ -20,13 +21,13 @@ public:
     ~MainWindow();
 
 public slots:
-    void receiveData(QStringList data);
+    void receiveData(QStringList *data);
 
 private:
     Ui::MainWindow *ui;
     AddDataDialog *_addDataDialog;
     GuideWindow *_guideWindow;
     AboutWindow *_aboutWindow;
-    Project *_indicators;
+    Project *_indicatorsProject;
 };
 #endif // MAINWINDOW_H

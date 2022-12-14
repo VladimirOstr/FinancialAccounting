@@ -9,11 +9,11 @@ class Project
 public:
     Project();
     ~Project();
-    void SetIndicator(QDate date,FinancialIndicators indicator);
+    void AddIndicatorsToMap(FinancialIndicators indicators);
 
 
 private:
-    QMap<QDate,FinancialIndicators> *_indicators = new QMap<QDate,FinancialIndicators>();
+    QMap<QDate,FinancialIndicators> *_indicatorsMap = new QMap<QDate,FinancialIndicators>();
 
 };
 

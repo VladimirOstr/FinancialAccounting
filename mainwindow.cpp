@@ -10,7 +10,9 @@ MainWindow::MainWindow(QWidget *parent)
     _addDataDialog = new AddDataDialog(this);
     _addDataDialog->setModal(true);
     _guideWindow = new GuideWindow();
+    _guideWindow->setModal(true);
     _aboutWindow = new AboutWindow();
+    _aboutWindow->setModal(true);
 
     connect(ui->addDataAction, SIGNAL(triggered()),
             _addDataDialog, SLOT(show()));
@@ -19,8 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->aboutAction, SIGNAL(triggered()),
             _aboutWindow, SLOT(show()));
 
-    connect(_addDataDialog, SIGNAL(sendData(QStringList)),
-            this, SLOT(recieveData(QStringList)));
+    connect(_addDataDialog, SIGNAL(sendData(QStringList*)),
+            this, SLOT(recieveData(QStringList*)));
 }
 
 MainWindow::~MainWindow()
@@ -28,10 +30,15 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::receiveData(QStringList data)
+void MainWindow::receiveData(QStringList *data)
 {
     for (int i = 0; i < ui->tableWidget->rowCount(); i++)
     {
-        ui->tableWidget->item(i,1)->setText(data.at(i));
+        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(data->at(i)));
     }
+    //FinancialIndicators indicators = FinancialIndicators::ToFinancialIndicators(data);
+    //_indicatorsProject->AddIndicatorsToMap(indicators);
 }
+
+
+
