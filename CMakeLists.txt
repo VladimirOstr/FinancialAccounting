@@ -13,25 +13,28 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
-        Main.cpp
-        MainWindow.cpp
-        MainWindow.h
-        MainWindow.ui
-        AddDataDialog.ui
-        AddDataDialog.cpp
-        AddDataDialog.h
-        GuideWindow.cpp
-        GuideWindow.h
-        GuideWindow.ui
-        AboutWindow.cpp
-        AboutWindow.h
-        AboutWindow.ui
-        FinancialIndicators.h
-        FinancialIndicators.cpp
-        Project.h
-        Project.cpp
-
+    sources/AboutWindow.cpp
+    sources/adddatadialog.cpp
+    sources/FinancialIndicators.cpp
+    sources/GuideWindow.cpp
+    sources/Main.cpp
+    sources/mainwindow.cpp
+    sources/project.cpp
+    headers/AboutWindow.h
+    headers/adddatadialog.h
+    headers/FinancialIndicators.h
+    headers/GuideWindow.h
+    headers/mainwindow.h
+    headers/Project.h
+    ui/AboutWindow.ui
+    ui/AddDataDialog.ui
+    ui/GuideWindow.ui
+    ui/MainWindow.ui
 )
+
+
+include_directories("headers/")
+
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(FinancialAccounting
