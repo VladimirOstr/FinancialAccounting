@@ -28,8 +28,10 @@ set(PROJECT_SOURCES
         AboutWindow.ui
         FinancialIndicators.cpp
         FinancialIndicators.h
-        Project.h
-        Project.cpp
+        DataStorage.h
+        DataStorage.cpp
+        DataStorageInterface.h
+        DataStorageInterface.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -6,7 +6,7 @@
 #include "AddDataDialog.h"
 #include "GuideWindow.h"
 #include "AboutWindow.h"
-#include "Project.h"
+#include "DataStorage.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,7 +17,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr, DataStorage data = new DataStorage());
     ~MainWindow();
 
 public slots:
@@ -28,6 +28,6 @@ private:
     AddDataDialog *_addDataDialog;
     GuideWindow *_guideWindow;
     AboutWindow *_aboutWindow;
-    Project *_indicatorsProject;
+    //DataStorage *_indicatorsProject;
 };
 #endif // MAINWINDOW_H
