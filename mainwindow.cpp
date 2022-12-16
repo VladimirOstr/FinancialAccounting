@@ -1,27 +1,28 @@
 #include "mainwindow.h"
-#include "./ui_mainwindow.h"
+#include "ui_mainwindow.h"
 
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(DataStorage *data, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    _addDataDialog = new AddDataDialog(this);
-    _addDataDialog->setModal(true);
+
+    AddDataDialog *addDataDialog = new AddDataDialog(data);
+    addDataDialog->setModal(true);
     _guideWindow = new GuideWindow();
     _guideWindow->setModal(true);
     _aboutWindow = new AboutWindow();
     _aboutWindow->setModal(true);
 
     connect(ui->addDataAction, SIGNAL(triggered()),
-            _addDataDialog, SLOT(show()));
+            addDataDialog, SLOT(show()));
     connect(ui->guideAction, SIGNAL(triggered()),
             _guideWindow, SLOT(show()));
     connect(ui->aboutAction, SIGNAL(triggered()),
             _aboutWindow, SLOT(show()));
 
-    connect(_addDataDialog, SIGNAL(sendData(QStringList*)),
+    connect(addDataDialog, SIGNAL(sendData(QStringList*)),
             this, SLOT(recieveData(QStringList*)));
 }
 

@@ -17,5 +17,11 @@ void DataStorage::AddIndicatorsToMap(FinancialIndicators indicators)
 
 QDate DataStorage::GetDate()
 {
+    return QDate::currentDate();
+}
+
+void DataStorage::SetDate()
+{
 
 }
+

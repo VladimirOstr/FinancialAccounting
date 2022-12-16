@@ -1,5 +1,5 @@
-#ifndef PROJECT_H
-#define PROJECT_H
+#ifndef DATASTORAGE_H
+#define DATASTORAGE_H
 
 #include <QMap>
 #include "FinancialIndicators.h"
@@ -11,6 +11,7 @@ public:
     DataStorage();
     ~DataStorage();
     QDate GetDate() override;
+    void SetDate() override;
     void AddIndicatorsToMap(FinancialIndicators indicators);
 
 
@@ -19,4 +20,4 @@ private:
 
 };
 
-#endif // PROJECT_H
+#endif // DATASTORAGE_H

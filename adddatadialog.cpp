@@ -1,13 +1,18 @@
 #include "adddatadialog.h"
 #include "ui_adddatadialog.h"
 
-AddDataDialog::AddDataDialog(QWidget *parent) :
+AddDataDialog::AddDataDialog(DataStorage *dataMap, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AddDataDialog)
 {
     ui->setupUi(this);
-    connect(ui->addDataTableWidget, SIGNAL(itemChanged(QTableWidgetItem*)),
-            this, SLOT(TextChanged(QTableWidgetItem*)));
+
+    connect(ui->dateLineEdit, SIGNAL(textEdited()),
+            dataMap, SLOT(DataEdit(Qstring)));
+    connect(ui->incomeLineEdit, SIGNAL(textEdited()),
+            this, SLOT(DataEdit(Qstring)));
+    connect(ui->consumptionLineEdit, SIGNAL(textEdited()),
+            this, SLOT(DataEdit(Qstring)));
     connect(ui->buttonBox, SIGNAL(accept()), this, SLOT(on_buttonBox_accepted()));
 
 }
@@ -19,19 +24,12 @@ AddDataDialog::~AddDataDialog()
 
 void AddDataDialog::on_buttonBox_accepted()
 {
-    for (int i = 0; i < ui->addDataTableWidget->rowCount();i++)
-    {
-        ui->addDataTableWidget->setItem(i,0, new QTableWidgetItem(""));
-    }
-    emit sendData(_indicatorsStringList);
+    emit sendData(_stringList);
 }
 
-void AddDataDialog::TextChanged(QTableWidgetItem* item)
+void AddDataDialog::DataEdit(QString string)
 {
-    if (item != NULL)
-    {
-        _indicatorsStringList->append(item->text());
-    }
+    _stringList->append(string);
 }
 
 

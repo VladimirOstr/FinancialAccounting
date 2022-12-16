@@ -4,6 +4,7 @@
 #include <QTableWidget>
 #include <QDialog>
 #include <QString>
+#include "DataStorage.h"
 
 namespace Ui {
 class AddDataDialog;
@@ -14,21 +15,21 @@ class AddDataDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddDataDialog(QWidget *parent = nullptr);
+    explicit AddDataDialog(DataStorage *dataMap, QWidget *parent = nullptr);
     ~AddDataDialog();
 
 signals:
     void sendData(QStringList *data);
 
 private slots:
-    void TextChanged(QTableWidgetItem *item);
+    void DataEdit(QString string);
 
 public slots:
     void on_buttonBox_accepted();
 
 private:
     Ui::AddDataDialog *ui;
-    QStringList *_indicatorsStringList = new QStringList();
+    QStringList *_stringList = new QStringList();
 };
 
 #endif // ADDDATADIALOG_H

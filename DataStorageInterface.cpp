@@ -1,6 +1,11 @@
-#include "DataStoradeInterface.h"
+#include "DataStorageInterface.h"
 
-DataStoradeInterface::DataStoradeInterface()
+DataStorageInterface::DataStorageInterface()
+{
+
+}
+
+void DataStorageInterface::EditStorage()
 {
 
 }

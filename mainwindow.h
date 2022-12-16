@@ -17,7 +17,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr, DataStorage data = new DataStorage());
+    MainWindow(DataStorage *data, QWidget *parent = nullptr);
     ~MainWindow();
 
 public slots:
@@ -25,7 +25,6 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
-    AddDataDialog *_addDataDialog;
     GuideWindow *_guideWindow;
     AboutWindow *_aboutWindow;
     //DataStorage *_indicatorsProject;
