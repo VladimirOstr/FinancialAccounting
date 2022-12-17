@@ -22,10 +22,10 @@ signals:
     void sendData(QStringList *data);
 
 private slots:
-    void DataEdit(QString string);
+    void DataEdit(DataStorage *dataMap, QString string);
 
 public slots:
-    void on_buttonBox_accepted();
+    void on_buttonBox_accepted(DataStorage *dataMap);
 
 private:
     Ui::AddDataDialog *ui;

@@ -13,6 +13,7 @@ public:
     QDate GetDate() override;
     void SetDate() override;
     void AddIndicatorsToMap(FinancialIndicators indicators);
+    FinancialIndicators SearchIndicators(QDate date);
 
 
 private:

@@ -8,6 +8,8 @@ MainWindow::MainWindow(DataStorage *data, QWidget *parent)
 {
     ui->setupUi(this);
 
+    //ui->tableWidget->setItem(0,0, new QTableWidgetItem("2022, 10, 11"));
+
     AddDataDialog *addDataDialog = new AddDataDialog(data);
     addDataDialog->setModal(true);
     _guideWindow = new GuideWindow();

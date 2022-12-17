@@ -3,15 +3,18 @@
 FinancialIndicators::FinancialIndicators(QDate date, double income,
                                          double consumption)
 {
-    date = _date;
-    income = _income;
-    consumption = _consumption;
+    _date = date;
+    _income = income;
+    _consumption = consumption;
     _total = _income - _consumption;
 }
 
 FinancialIndicators::FinancialIndicators()
 {
-
+    _date = QDate(1970, 1, 1);
+    _income = 0;
+    _consumption = 0;
+    _total = 0;
 }
 
 FinancialIndicators::~FinancialIndicators()

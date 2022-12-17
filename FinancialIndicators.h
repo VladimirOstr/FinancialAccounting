@@ -14,7 +14,7 @@ public:
     QDate GetDate();
 
 private:
-    QDate _date = QDate::currentDate();
+    QDate _date;
     double _income = 0;
     double _consumption = 0;
     double _total;

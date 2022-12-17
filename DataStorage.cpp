@@ -25,3 +25,8 @@ void DataStorage::SetDate()
 
 }
 
+FinancialIndicators DataStorage::SearchIndicators(QDate date)
+{
+    return _indicatorsMap->value(date);
+}
+
