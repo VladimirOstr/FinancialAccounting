@@ -19,7 +19,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(DataStorage *data, QWidget *parent = nullptr);
     ~MainWindow();
-    void FillTableWidgets(Ui::MainWindow *ui);
+    void FillTableWidgets(DataStorage *data);
 
 public slots:
     void receiveData(QStringList *data);

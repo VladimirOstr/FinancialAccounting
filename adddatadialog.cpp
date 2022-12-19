@@ -31,7 +31,7 @@ void AddDataDialog::on_buttonBox_accepted(DataStorage *dataMap)
 void AddDataDialog::DataEdit(DataStorage *dataMap, QString string)
 {
     QDate date = QDate::fromString(string, "dd, mm, yyyy");
-    FinancialIndicators data = dataMap->SearchIndicators(date);
+    FinancialIndicators data = *dataMap->SearchIndicators(date);
     if(data.GetDate() == QDate(1970, 1, 1))
     {
         _stringList->append(string);

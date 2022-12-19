@@ -12,12 +12,12 @@ public:
     ~DataStorage();
     QDate GetDate() override;
     void SetDate() override;
-    void AddIndicatorsToMap(FinancialIndicators indicators);
-    FinancialIndicators SearchIndicators(QDate date);
+    void AddIndicatorsToMap(FinancialIndicators *indicators);
+    FinancialIndicators *SearchIndicators(QDate date);
 
 
 private:
-    QMap<QDate,FinancialIndicators> *_indicatorsMap;
+    QMap<QDate,FinancialIndicators*> *_indicatorsMap;
 
 };
 
