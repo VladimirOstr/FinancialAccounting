@@ -19,15 +19,28 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(DataStorage *data, QWidget *parent = nullptr);
     ~MainWindow();
-    void FillTableWidgets(DataStorage *data);
+    void InitializeTableWidgets();
 
 public slots:
     void receiveData(QStringList *data);
+    void SelectMonth(QAction *action);
 
 private:
     Ui::MainWindow *ui;
     GuideWindow *_guideWindow;
     AboutWindow *_aboutWindow;
+    QStringList months{"Январь",
+                "Февраль",
+                "Март",
+                "Апрель",
+                "Май",
+                "Июнь",
+                "Июль",
+                "Август",
+                "Сентябрь",
+                "Октябрь",
+                "Ноябрь",
+                "Декабрь"};
     //DataStorage *_indicatorsProject;
 };
 #endif // MAINWINDOW_H

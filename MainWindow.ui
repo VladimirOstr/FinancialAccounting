@@ -40,7 +40,7 @@
     <item>
      <widget class="QToolButton" name="toolButton">
       <property name="text">
-       <string>Январь</string>
+       <string>Месяц</string>
       </property>
       <property name="checkable">
        <bool>false</bool>
