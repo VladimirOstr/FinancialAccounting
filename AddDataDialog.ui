@@ -180,6 +180,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>dateLineEdit</tabstop>
+  <tabstop>incomeLineEdit</tabstop>
+  <tabstop>consumptionLineEdit</tabstop>
+  <tabstop>totalLineEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

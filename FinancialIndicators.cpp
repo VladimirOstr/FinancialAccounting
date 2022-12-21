@@ -14,7 +14,7 @@ FinancialIndicators::FinancialIndicators()
     _date = QDate(1970, 1, 1);
     _income = 0;
     _consumption = 0;
-    _total = 0;
+    _total = _income - _consumption;
 }
 
 FinancialIndicators::~FinancialIndicators()
@@ -34,4 +34,19 @@ FinancialIndicators ToFinancialIndicators(QStringList *indicatorsStringList)
 QDate FinancialIndicators::GetDate()
 {
     return _date;
+}
+
+void FinancialIndicators::SetIncome(double income)
+{
+    _income = income;
+}
+
+void FinancialIndicators::SetConsumption(double consumption)
+{
+    _consumption = consumption;
+}
+
+double FinancialIndicators::GetTotal()
+{
+    return _total;
 }

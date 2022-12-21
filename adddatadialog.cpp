@@ -6,13 +6,22 @@ AddDataDialog::AddDataDialog(DataStorage *dataMap, QWidget *parent) :
     ui(new Ui::AddDataDialog)
 {
     ui->setupUi(this);
-
-    connect(ui->dateLineEdit, SIGNAL(textEdited()),
-            this, SLOT(DateEdit(DataStorage*,QString)));
-    connect(ui->incomeLineEdit, SIGNAL(textEdited()),
-            this, SLOT(DataEdit(Qstring)));
-    connect(ui->consumptionLineEdit, SIGNAL(textEdited()),
-            this, SLOT(DataEdit(Qstring)));
+    ui->dateLineEdit->setPlaceholderText("ДД/ММ/ГГГГ");
+    connect(ui->dateLineEdit, SIGNAL(textChanged(QString)),
+            this, SLOT(DateEdit(QString)));
+    connect(ui->incomeLineEdit, SIGNAL(textChanged(QString)),
+            this, SLOT(IncomeEdit(Qstring, DataStorage*)));
+    connect(ui->consumptionLineEdit, SIGNAL(textChanged()),
+            this, SLOT(IndicatorsEdit(Qstring, DataStorage*)));
+    connect(ui->incomeLineEdit, SIGNAL(textChanged(QString)),
+            this, SLOT(on_changed()));
+    connect(ui->consumptionLineEdit, SIGNAL(textChanged(QString)),
+            this, SLOT(on_changed()));
+    //if (ui->incomeLineEdit->text() != "" && ui->consumptionLineEdit->text() != "")
+    //{
+        //ui->totalLineEdit->setText(QString::number(dataMap->GetTotal(currentDate)));
+    //}
+    //connect();
     connect(ui->buttonBox, SIGNAL(accept()), this, SLOT(on_buttonBox_accepted(DataStorage*)));
 
 }
@@ -24,21 +33,50 @@ AddDataDialog::~AddDataDialog()
 
 void AddDataDialog::on_buttonBox_accepted(DataStorage *dataMap)
 {
-
-    emit sendData(_stringList);
+    //emit sendData(_stringList);
 }
 
-void AddDataDialog::DataEdit(DataStorage *dataMap, QString string)
+void AddDataDialog::DateEdit(QString string)
 {
-    QDate date = QDate::fromString(string, "dd, mm, yyyy");
-    FinancialIndicators data = *dataMap->SearchIndicators(date);
-    if(data.GetDate() == QDate(1970, 1, 1))
+    try
     {
-        _stringList->append(string);
-        return;
+        currentDate = QDate::fromString(string, "dd, mm, yyyy");
+        //dataMap->SetDate(currentDate);
     }
-    _stringList->append(string);
+    catch(std::invalid_argument)
+    {
+        ui->dateLineEdit->setStyleSheet("QLineEdit { background: rgb(0, 255, 255);"
+                                        " selection-background-color: rgb(100, 25, 25); }");
+    }
 }
 
+void AddDataDialog::IncomeEdit(QString string, DataStorage *dataMap)
+{
+    try
+    {
+        dataMap->SetIncome(currentDate,string.toDouble());
+    }
+    catch(std::invalid_argument)
+    {
+        //ui->dateLineEdit->setStyle();
+    }
+}
 
+void AddDataDialog::ConsumptionEdit(QString string, DataStorage *dataMap)
+{
+    try
+    {
+        dataMap->SetConsumption(currentDate,string.toDouble());
+    }
+    catch(std::invalid_argument)
+    {
+        //ui->dateLineEdit->setStyle();
+    }
+}
 
+void AddDataDialog::on_changed()
+{
+    double result;
+    result = ui->incomeLineEdit->text().toDouble() - ui->consumptionLineEdit->text().toDouble();
+    ui->totalLineEdit->setText(QString::number(result));
+}

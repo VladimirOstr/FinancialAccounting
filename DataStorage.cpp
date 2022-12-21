@@ -2,13 +2,13 @@
 
 DataStorage::DataStorage()
 {
-    _indicatorsMap = new QMap<QDate,FinancialIndicators*>();
-    QDate date(2022,1,1);
-    for (int i = 0; i < 365; i++)
-    {
-        _indicatorsMap->insert(date.addDays(i),new FinancialIndicators());
+    _indicatorsMap = new QMap<QDate,FinancialIndicators>();
+    //QDate date(2022,1,1);
+    //for (int i = 0; i < 365; i++)
+    //{
+       // _indicatorsMap->insert(date.addDays(i),new FinancialIndicators());
 
-    }
+    //}
 }
 
 DataStorage::~DataStorage()
@@ -16,23 +16,30 @@ DataStorage::~DataStorage()
     delete _indicatorsMap;
 }
 
-void DataStorage::AddIndicatorsToMap(FinancialIndicators *indicators)
-{
-    _indicatorsMap->insert(indicators->GetDate(),indicators);
-}
 
 QDate DataStorage::GetDate()
 {
     return _indicatorsMap->firstKey();
 }
 
-void DataStorage::SetDate()
+void DataStorage::SetDate(QDate date)
 {
-
+    _indicatorsMap->insert(date,FinancialIndicators());
 }
 
-FinancialIndicators* DataStorage::SearchIndicators(QDate date)
+void DataStorage::SetIncome(QDate date, double income)
 {
-    return _indicatorsMap->value(date);
+    indicator.SetIncome(income);
+    _indicatorsMap->insert(date,indicator);
 }
 
+void DataStorage::SetConsumption(QDate date, double consumption)
+{
+    indicator.SetConsumption(consumption);
+    _indicatorsMap->insert(date,indicator);
+}
+
+double DataStorage::GetTotal(QDate date)
+{
+    return _indicatorsMap->value(date).GetTotal();
+}

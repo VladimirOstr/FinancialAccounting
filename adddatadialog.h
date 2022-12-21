@@ -22,14 +22,18 @@ signals:
     void sendData(QStringList *data);
 
 private slots:
-    void DataEdit(DataStorage *dataMap, QString string);
+    void DateEdit(QString string);
+    void IncomeEdit(QString string,DataStorage *dataMap);
+    void ConsumptionEdit(QString string, DataStorage *dataMap);
 
 public slots:
     void on_buttonBox_accepted(DataStorage *dataMap);
+    void on_changed();
 
 private:
     Ui::AddDataDialog *ui;
-    QStringList *_stringList = new QStringList();
+    QDate currentDate;
+    QColor errorColor = QColor("Red");
 };
 
 #endif // ADDDATADIALOG_H

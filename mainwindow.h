@@ -24,6 +24,7 @@ public:
 public slots:
     void receiveData(QStringList *data);
     void SelectMonth(QAction *action);
+    void FillTableWidgets(QDate date);
 
 private:
     Ui::MainWindow *ui;
@@ -41,6 +42,6 @@ private:
                 "Октябрь",
                 "Ноябрь",
                 "Декабрь"};
-    //DataStorage *_indicatorsProject;
+    QList <QTableWidget*> *tableWidgets = new QList<QTableWidget*>();
 };
 #endif // MAINWINDOW_H

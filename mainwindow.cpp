@@ -7,7 +7,40 @@ MainWindow::MainWindow(DataStorage *data, QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //InitializeTableWidgets();
+    tableWidgets->append(ui->tableWidget);
+    tableWidgets->append(ui->tableWidget_2);
+    tableWidgets->append(ui->tableWidget_3);
+    tableWidgets->append(ui->tableWidget_4);
+    tableWidgets->append(ui->tableWidget_5);
+    tableWidgets->append(ui->tableWidget_6);
+    tableWidgets->append(ui->tableWidget_7);
+    tableWidgets->append(ui->tableWidget_8);
+    tableWidgets->append(ui->tableWidget_9);
+    tableWidgets->append(ui->tableWidget_10);
+    tableWidgets->append(ui->tableWidget_11);
+    tableWidgets->append(ui->tableWidget_12);
+    tableWidgets->append(ui->tableWidget_13);
+    tableWidgets->append(ui->tableWidget_14);
+    tableWidgets->append(ui->tableWidget_15);
+    tableWidgets->append(ui->tableWidget_16);
+    tableWidgets->append(ui->tableWidget_17);
+    tableWidgets->append(ui->tableWidget_18);
+    tableWidgets->append(ui->tableWidget_19);
+    tableWidgets->append(ui->tableWidget_20);
+    tableWidgets->append(ui->tableWidget_21);
+    tableWidgets->append(ui->tableWidget_22);
+    tableWidgets->append(ui->tableWidget_23);
+    tableWidgets->append(ui->tableWidget_24);
+    tableWidgets->append(ui->tableWidget_25);
+    tableWidgets->append(ui->tableWidget_26);
+    tableWidgets->append(ui->tableWidget_27);
+    tableWidgets->append(ui->tableWidget_28);
+    tableWidgets->append(ui->tableWidget_29);
+    tableWidgets->append(ui->tableWidget_30);
+    tableWidgets->append(ui->tableWidget_31);
+    QDate baseDate(2022,1,1);
+    FillTableWidgets(baseDate);
+
     QMenu *monthMenu = new QMenu("Месяц");
     monthMenu->addAction(months[0]);
     monthMenu->addAction(months[1]);
@@ -26,14 +59,16 @@ MainWindow::MainWindow(DataStorage *data, QWidget *parent)
     connect(monthMenu, SIGNAL(triggered(QAction*)), this, SLOT(SelectMonth(QAction*)));
 
     AddDataDialog *addDataDialog = new AddDataDialog(data);
-    addDataDialog->setModal(true);
+    //addDataDialog->setModal(true);
     _guideWindow = new GuideWindow();
     _guideWindow->setModal(true);
     _aboutWindow = new AboutWindow();
     _aboutWindow->setModal(true);
 
     connect(ui->addDataAction, SIGNAL(triggered()),
-            addDataDialog, SLOT(show()));
+            addDataDialog, SLOT(exec()));
+    connect(ui->tableWidget, SIGNAL(cellDoubleClicked(int,int)),
+            addDataDialog, SLOT(exec()));
     connect(ui->guideAction, SIGNAL(triggered()),
             _guideWindow, SLOT(show()));
     connect(ui->aboutAction, SIGNAL(triggered()),
@@ -64,54 +99,96 @@ void MainWindow::SelectMonth(QAction *action)
     switch(months.indexOf(action->text()))
     {
         case 0:
-            ui->tableWidget->setItem(0,0, new QTableWidgetItem(action->text()));
+        {
+            QDate date(2022,1,1);
+            FillTableWidgets(date);
 
-        break;
+            break;
+        }
 
         case 1:
-            ui->tableWidget->setItem(0,0, new QTableWidgetItem(action->text()));
-
-        break;
+        {
+            QDate date(2022,2,1);
+            FillTableWidgets(date);
+            break;
+        }
 
         case 2:
-
-        break;
+        {
+            QDate date(2022,3,1);
+            FillTableWidgets(date);
+            break;
+        }
 
         case 3:
-
-        break;
+        {
+            QDate date(2022,4,1);
+            FillTableWidgets(date);
+            break;
+        }
 
         case 4:
-
-        break;
+        {
+            QDate date(2022,5,1);
+            FillTableWidgets(date);
+            break;
+        }
 
         case 5:
-
-        break;
+        {
+            QDate date(2022,6,1);
+            FillTableWidgets(date);
+            break;
+        }
 
         case 6:
-
-        break;
+        {
+            QDate date(2022,7,1);
+            FillTableWidgets(date);
+            break;
+        }
 
         case 7:
-
-        break;
+        {
+            QDate date(2022,8,1);
+            FillTableWidgets(date);
+            break;
+        }
 
         case 8:
-
-        break;
+        {
+            QDate date(2022,9,1);
+            FillTableWidgets(date);
+            break;
+        }
 
         case 9:
-
-        break;
+        {
+            QDate date(2022,10,1);
+            FillTableWidgets(date);
+            break;
+        }
 
         case 10:
-
-        break;
+        {
+            QDate date(2022,11,1);
+            FillTableWidgets(date);
+            break;
+        }
 
         case 11:
-
-        break;
+        {
+            QDate date(2022,12,1);
+            FillTableWidgets(date);
+            break;
+        }
     }
 }
 
+void MainWindow::FillTableWidgets(QDate date)
+{
+    for (int i = 0; i < tableWidgets->count(); i++)
+    {
+        tableWidgets->at(i)->setItem(0,0, new QTableWidgetItem(date.addDays(i).toString()));
+    }
+}
