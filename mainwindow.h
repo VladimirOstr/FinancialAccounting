@@ -22,9 +22,9 @@ public:
     void InitializeTableWidgets();
 
 public slots:
-    void receiveData(QStringList *data);
-    void SelectMonth(QAction *action);
-    void FillTableWidgets(QDate date);
+    void SelectMonth(QAction *action, DataStorage *data);
+    void FillTableWidgets(QDate date, DataStorage *data);
+    void ReceiveData(QDate date, double income, double consumption, DataStorage *data);
 
 private:
     Ui::MainWindow *ui;

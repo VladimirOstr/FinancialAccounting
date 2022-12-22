@@ -5,25 +5,22 @@ AddDataDialog::AddDataDialog(DataStorage *dataMap, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AddDataDialog)
 {
+
     ui->setupUi(this);
     ui->dateLineEdit->setPlaceholderText("ДД/ММ/ГГГГ");
-    connect(ui->dateLineEdit, SIGNAL(textChanged(QString)),
-            this, SLOT(DateEdit(QString)));
-    connect(ui->incomeLineEdit, SIGNAL(textChanged(QString)),
-            this, SLOT(IncomeEdit(Qstring, DataStorage*)));
-    connect(ui->consumptionLineEdit, SIGNAL(textChanged()),
-            this, SLOT(IndicatorsEdit(Qstring, DataStorage*)));
-    connect(ui->incomeLineEdit, SIGNAL(textChanged(QString)),
-            this, SLOT(on_changed()));
-    connect(ui->consumptionLineEdit, SIGNAL(textChanged(QString)),
-            this, SLOT(on_changed()));
-    //if (ui->incomeLineEdit->text() != "" && ui->consumptionLineEdit->text() != "")
-    //{
-        //ui->totalLineEdit->setText(QString::number(dataMap->GetTotal(currentDate)));
-    //}
-    //connect();
-    connect(ui->buttonBox, SIGNAL(accept()), this, SLOT(on_buttonBox_accepted(DataStorage*)));
+    connect(ui->dateLineEdit, &QLineEdit::editingFinished,
+            this, &AddDataDialog::DateEdit);
+    connect(ui->incomeLineEdit, &QLineEdit::editingFinished,
+            this,&AddDataDialog::IncomeEdit);
+    connect(ui->consumptionLineEdit, &QLineEdit::editingFinished,
+            this, &AddDataDialog::ConsumptionEdit);
+    connect(ui->incomeLineEdit, &QLineEdit::textChanged,
+            this, &AddDataDialog::on_changed);
+    connect(ui->consumptionLineEdit, &QLineEdit::textChanged,
+            this, &AddDataDialog::on_changed);
 
+    //connect(ui->buttonBox, SIGNAL(accept()), this, SLOT(on_buttonBox_accepted(DataStorage*)));
+    //[this, &dataMap](){DateEdit(dataMap);}
 }
 
 AddDataDialog::~AddDataDialog()
@@ -31,47 +28,53 @@ AddDataDialog::~AddDataDialog()
     delete ui;
 }
 
-void AddDataDialog::on_buttonBox_accepted(DataStorage *dataMap)
+void AddDataDialog::on_buttonBox_accepted()
 {
     //emit sendData(_stringList);
+    emit sendData(currentDate, currentIncome, currentConsumption);
 }
 
-void AddDataDialog::DateEdit(QString string)
+void AddDataDialog::DateEdit()
 {
     try
     {
-        currentDate = QDate::fromString(string, "dd, mm, yyyy");
+        currentDate = QDate::fromString(ui->dateLineEdit->text(), "dd-MM-yyyy");
         //dataMap->SetDate(currentDate);
     }
     catch(std::invalid_argument)
     {
-        ui->dateLineEdit->setStyleSheet("QLineEdit { background: rgb(0, 255, 255);"
-                                        " selection-background-color: rgb(100, 25, 25); }");
+        ui->dateLineEdit->setStyleSheet("background-color: red");
     }
 }
 
-void AddDataDialog::IncomeEdit(QString string, DataStorage *dataMap)
+void AddDataDialog::IncomeEdit()
 {
+
     try
     {
-        dataMap->SetIncome(currentDate,string.toDouble());
+        currentIncome = ui->incomeLineEdit->text().toDouble();
+        //dataMap->SetIncome(currentDate,ui->incomeLineEdit->text().toDouble());
+        //emit dataMap->SetIncome(currentDate, ui->incomeLineEdit->text().toDouble());
     }
     catch(std::invalid_argument)
     {
-        //ui->dateLineEdit->setStyle();
+        ui->incomeLineEdit->setStyleSheet("background-color: red");
     }
 }
 
-void AddDataDialog::ConsumptionEdit(QString string, DataStorage *dataMap)
+void AddDataDialog::ConsumptionEdit()
 {
     try
     {
-        dataMap->SetConsumption(currentDate,string.toDouble());
+        currentConsumption = ui->consumptionLineEdit->text().toDouble();
+        //dataMap->SetIncome(currentDate,ui->incomeLineEdit->text().toDouble());
+        //emit dataMap->SetIncome(currentDate, ui->incomeLineEdit->text().toDouble());
     }
     catch(std::invalid_argument)
     {
-        //ui->dateLineEdit->setStyle();
+        ui->consumptionLineEdit->setStyleSheet("background-color: red");
     }
+
 }
 
 void AddDataDialog::on_changed()

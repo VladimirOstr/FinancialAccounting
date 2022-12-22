@@ -4,6 +4,9 @@
 #include <QTableWidget>
 #include <QDialog>
 #include <QString>
+#include <QValidator>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 #include "DataStorage.h"
 
 namespace Ui {
@@ -19,21 +22,23 @@ public:
     ~AddDataDialog();
 
 signals:
-    void sendData(QStringList *data);
+    void sendData(QDate currentDate, double currentIncome, double currentConsumption);
 
 private slots:
-    void DateEdit(QString string);
-    void IncomeEdit(QString string,DataStorage *dataMap);
-    void ConsumptionEdit(QString string, DataStorage *dataMap);
+    void DateEdit();
+    void IncomeEdit();
+    void ConsumptionEdit();
 
 public slots:
-    void on_buttonBox_accepted(DataStorage *dataMap);
+    void on_buttonBox_accepted();
     void on_changed();
 
 private:
     Ui::AddDataDialog *ui;
     QDate currentDate;
-    QColor errorColor = QColor("Red");
+    double currentIncome;
+    double currentConsumption;
+    //QRegularExpressions
 };
 
 #endif // ADDDATADIALOG_H

@@ -4,8 +4,3 @@ DataStorageInterface::DataStorageInterface()
 {
 
 }
-
-void DataStorageInterface::EditStorage()
-{
-
-}

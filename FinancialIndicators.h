@@ -10,17 +10,19 @@ public:
                         double consumption);
     FinancialIndicators();
     ~FinancialIndicators();
-    static FinancialIndicators ToFinancialIndicators(QStringList *indicatorsStringList);
-    QDate GetDate();
     void SetIncome(double income);
     void SetConsumption(double consumption);
+    void SetTotal(double income, double consumption);
+    QDate GetDate();
+    double GetIncome();
+    double GetConsumption();
     double GetTotal();
 
 private:
     QDate _date;
     double _income = 0;
     double _consumption = 0;
-    double _total = _income - _consumption;
+    double _total = 0;
 
 };
 

@@ -19,16 +19,7 @@ FinancialIndicators::FinancialIndicators()
 
 FinancialIndicators::~FinancialIndicators()
 {
-
-}
-
-FinancialIndicators ToFinancialIndicators(QStringList *indicatorsStringList)
-{
-    QDate date = QDate::fromString(indicatorsStringList->at(0), "dd/mm/yyyy");
-    double income = indicatorsStringList->at(1).toDouble();
-    double consumption = indicatorsStringList->at(2).toDouble();
-    FinancialIndicators *indicators = new FinancialIndicators(date,income,consumption);
-    return *indicators;
+    delete this;
 }
 
 QDate FinancialIndicators::GetDate()
@@ -49,4 +40,19 @@ void FinancialIndicators::SetConsumption(double consumption)
 double FinancialIndicators::GetTotal()
 {
     return _total;
+}
+
+void FinancialIndicators::SetTotal(double income, double consumption)
+{
+    _total += income - consumption;
+}
+
+double FinancialIndicators::GetIncome()
+{
+    return _income;
+}
+
+double FinancialIndicators::GetConsumption()
+{
+    return _consumption;
 }
