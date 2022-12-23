@@ -12,12 +12,13 @@ public:
     ~DataStorage();
     void AddIndicator(QDate date, double income, double consumption);
     FinancialIndicators *SearchIndicators(QDate date);
+    double GetIncome(QDate date);
+    double GetConsumption(QDate date);
+    double GetTotal(QDate date);
 
-public slots:
-    //void ReceiveData(QDate date, double income, double consumption);
+
 private:
     QMap<QDate,FinancialIndicators> *_indicatorsMap;
-    //FinancialIndicators _indicator;
 
 };
 

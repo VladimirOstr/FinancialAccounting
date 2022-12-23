@@ -19,7 +19,7 @@ FinancialIndicators::FinancialIndicators()
 
 FinancialIndicators::~FinancialIndicators()
 {
-    delete this;
+    //delete this;
 }
 
 QDate FinancialIndicators::GetDate()

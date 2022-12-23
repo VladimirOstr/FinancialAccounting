@@ -38,7 +38,7 @@ private:
     QDate currentDate;
     double currentIncome;
     double currentConsumption;
-    //QRegularExpressions
+    QRegularExpression dateRegExp;
 };
 
 #endif // ADDDATADIALOG_H

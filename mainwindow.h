@@ -43,5 +43,6 @@ private:
                 "Ноябрь",
                 "Декабрь"};
     QList <QTableWidget*> *tableWidgets = new QList<QTableWidget*>();
+    QDate baseDate;
 };
 #endif // MAINWINDOW_H

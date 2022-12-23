@@ -5,9 +5,9 @@ AddDataDialog::AddDataDialog(DataStorage *dataMap, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AddDataDialog)
 {
-
+    dateRegExp.setPattern("");
     ui->setupUi(this);
-    ui->dateLineEdit->setPlaceholderText("ДД/ММ/ГГГГ");
+    ui->dateLineEdit->setPlaceholderText("ДД-ММ-ГГГГ");
     connect(ui->dateLineEdit, &QLineEdit::editingFinished,
             this, &AddDataDialog::DateEdit);
     connect(ui->incomeLineEdit, &QLineEdit::editingFinished,
