@@ -23,7 +23,7 @@ public:
 
 public slots:
     void SelectMonth(QAction *action, DataStorage *data);
-    void FillTableWidgets(QDate date, DataStorage *data);
+    void FillTableWidgets(DataStorage *data);
     void ReceiveData(QDate date, double income, double consumption, DataStorage *data);
 
 private:

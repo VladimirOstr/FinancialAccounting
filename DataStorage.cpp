@@ -16,6 +16,7 @@ void DataStorage::AddIndicator(QDate date, double income, double consumption)
     FinancialIndicators *indicator = new FinancialIndicators(date, income, consumption);
     _indicatorsMap->insert(date,*indicator);
     QMap <QDate,FinancialIndicators>::iterator it = _indicatorsMap->find(date);
+    QMap <QDate,FinancialIndicators>::iterator itBegin = _indicatorsMap->begin();
     if (_indicatorsMap->contains(date.addDays(-1)))
     {
         QMap <QDate,FinancialIndicators>::iterator itPrev = _indicatorsMap->find(date.addDays(-1));
@@ -26,6 +27,16 @@ void DataStorage::AddIndicator(QDate date, double income, double consumption)
             itPrev++;
         }
     }
+    /*for (itBegin; itBegin != itCurrent; itBegin++)
+    {
+        itCurrent.value().SetTotal(itBegin->GetIncome(),
+                                   itBegin->GetConsumption());
+    }*/
+    /*for (itBegin; itBegin != _indicatorsMap->end(); itBegin++)
+    {
+        if (itBegin.)
+    }*/
+
 
 }
 
@@ -42,4 +53,9 @@ double DataStorage::GetConsumption(QDate date)
 double DataStorage::GetTotal(QDate date)
 {
     return (_indicatorsMap->contains(date))? _indicatorsMap->value(date).GetTotal(): 0;
+}
+
+bool DataStorage::Contains(QDate date)
+{
+    return _indicatorsMap->contains(date);
 }

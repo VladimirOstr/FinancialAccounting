@@ -15,6 +15,7 @@ public:
     double GetIncome(QDate date);
     double GetConsumption(QDate date);
     double GetTotal(QDate date);
+    bool Contains(QDate date);
 
 
 private:
