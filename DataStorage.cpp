@@ -13,7 +13,7 @@ DataStorage::~DataStorage()
     delete _indicatorsMap;
 }
 
-void DataStorage::AddIndicator(QDate date, double income, double consumption)
+void DataStorage::SetIndicator(QDate date, double income, double consumption)
 {
     FinancialIndicators *indicator = new FinancialIndicators(date, income, consumption);
     _indicatorsMap->insert(date,*indicator);
@@ -27,16 +27,6 @@ void DataStorage::AddIndicator(QDate date, double income, double consumption)
 
 }
 
-void DataStorage::CalculateTotal()
-{
-    QMap <QDate,FinancialIndicators>::iterator it = _indicatorsMap->begin();
-    double currentTotal = 0;
-    /*for (it; it != _indicatorsMap->end(); it++)
-    {
-        it.value().SetTotal(currentTotal);
-        currentTotal = it.value().GetTotal();
-    }*/
-}
 
 double DataStorage::GetIncome(QDate date)
 {

@@ -3,13 +3,12 @@
 
 #include <QTableWidget>
 #include <QDate>
-#include "FinancialIndicators.h"
 
 class DataStorageInterface
 {
 public:
     DataStorageInterface();
-
+    virtual void SetIndicator(QDate date, double income, double consumption) = 0;
 
 public slots:
     //void EditStorage();

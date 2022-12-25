@@ -66,12 +66,6 @@ MainWindow::MainWindow(DataStorage *data, QWidget *parent)
 
     connect(ui->addDataAction, &QAction::triggered,
             addDataDialog, &AddDataDialog::exec);
-    /*connect(ui->tableWidget, &QTableWidget::cellDoubleClicked,
-            addDataDialog, [this](int row, int column,AddDataDialog *Edit)
-            {Edit = new AddDataDialog(ui->tableWidget->item(0,0)->text(),
-                                 ui->tableWidget->item(0,1)->text(),
-                                 ui->tableWidget->item(0,2)->text());
-                                 Edit->exec();});*/
     connect(ui->guideAction, &QAction::triggered,
             _guideWindow, &GuideWindow::exec);
     connect(ui->aboutAction, &QAction::triggered,
@@ -229,7 +223,7 @@ void MainWindow::FillTableWidgets(DataStorage *data)
 
 void MainWindow::ReceiveData(QDate date, double income, double consumption, DataStorage* data)
 {
-    data->AddIndicator(date,income,consumption);
+    data->SetIndicator(date,income,consumption);
     FillTableWidgets(data);
 }
 

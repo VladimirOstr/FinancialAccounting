@@ -10,13 +10,11 @@ class DataStorage:public DataStorageInterface
 public:
     DataStorage();
     ~DataStorage();
-    void AddIndicator(QDate date, double income, double consumption);
-    FinancialIndicators *SearchIndicators(QDate date);
+    void SetIndicator(QDate date, double income, double consumption) override;
     double GetIncome(QDate date);
     double GetConsumption(QDate date);
     double GetTotal(QDate date);
     bool Contains(QDate date);
-    void CalculateTotal();
 
 private:
     QMap<QDate,FinancialIndicators> *_indicatorsMap;
