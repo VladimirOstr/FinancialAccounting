@@ -12,7 +12,7 @@ public:
     ~FinancialIndicators();
     void SetIncome(double income);
     void SetConsumption(double consumption);
-    void SetTotal(double income, double consumption);
+    void SetTotal(double total);
     QDate GetDate();
     double GetIncome();
     double GetConsumption();

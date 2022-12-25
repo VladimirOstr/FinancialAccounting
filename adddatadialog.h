@@ -18,7 +18,8 @@ class AddDataDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddDataDialog(DataStorage *dataMap, QWidget *parent = nullptr);
+    explicit AddDataDialog(QString date, QString income,
+                           QString consumption, QWidget *parent = nullptr);
     ~AddDataDialog();
 
 signals:
@@ -38,7 +39,7 @@ private:
     QDate currentDate;
     double currentIncome;
     double currentConsumption;
-    QRegularExpression dateRegExp;
+    QValidator *digitValidator;
 };
 
 #endif // ADDDATADIALOG_H

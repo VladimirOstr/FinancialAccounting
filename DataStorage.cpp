@@ -3,6 +3,8 @@
 DataStorage::DataStorage()
 {
     _indicatorsMap = new QMap<QDate,FinancialIndicators>();
+    FinancialIndicators indicator;
+    _indicatorsMap->insert(indicator.GetDate(),indicator);
 
 }
 
@@ -15,29 +17,25 @@ void DataStorage::AddIndicator(QDate date, double income, double consumption)
 {
     FinancialIndicators *indicator = new FinancialIndicators(date, income, consumption);
     _indicatorsMap->insert(date,*indicator);
-    QMap <QDate,FinancialIndicators>::iterator it = _indicatorsMap->find(date);
-    QMap <QDate,FinancialIndicators>::iterator itBegin = _indicatorsMap->begin();
-    if (_indicatorsMap->contains(date.addDays(-1)))
+    QMap <QDate,FinancialIndicators>::iterator it = _indicatorsMap->begin();
+    double currentTotal = 0;
+    for (it; it != _indicatorsMap->end(); it++)
     {
-        QMap <QDate,FinancialIndicators>::iterator itPrev = _indicatorsMap->find(date.addDays(-1));
-        for (it; it != _indicatorsMap->end(); it++)
-        {
-            it.value().SetTotal(itPrev->GetIncome(),
-                                    itPrev->GetConsumption());
-            itPrev++;
-        }
+        it.value().SetTotal(currentTotal);
+        currentTotal = it.value().GetTotal();
     }
-    /*for (itBegin; itBegin != itCurrent; itBegin++)
-    {
-        itCurrent.value().SetTotal(itBegin->GetIncome(),
-                                   itBegin->GetConsumption());
-    }*/
-    /*for (itBegin; itBegin != _indicatorsMap->end(); itBegin++)
-    {
-        if (itBegin.)
-    }*/
 
+}
 
+void DataStorage::CalculateTotal()
+{
+    QMap <QDate,FinancialIndicators>::iterator it = _indicatorsMap->begin();
+    double currentTotal = 0;
+    /*for (it; it != _indicatorsMap->end(); it++)
+    {
+        it.value().SetTotal(currentTotal);
+        currentTotal = it.value().GetTotal();
+    }*/
 }
 
 double DataStorage::GetIncome(QDate date)
@@ -52,7 +50,8 @@ double DataStorage::GetConsumption(QDate date)
 
 double DataStorage::GetTotal(QDate date)
 {
-    return (_indicatorsMap->contains(date))? _indicatorsMap->value(date).GetTotal(): 0;
+    return (_indicatorsMap->contains(date))?
+                _indicatorsMap->value(date).GetTotal(): 0;
 }
 
 bool DataStorage::Contains(QDate date)

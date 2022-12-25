@@ -20,10 +20,11 @@ public:
     MainWindow(DataStorage *data, QWidget *parent = nullptr);
     ~MainWindow();
     void InitializeTableWidgets();
-
-public slots:
     void SelectMonth(QAction *action, DataStorage *data);
     void FillTableWidgets(DataStorage *data);
+    void ClearTableWidgets();
+
+public slots:
     void ReceiveData(QDate date, double income, double consumption, DataStorage *data);
 
 private:

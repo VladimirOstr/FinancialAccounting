@@ -1,12 +1,20 @@
 #include "adddatadialog.h"
 #include "ui_adddatadialog.h"
 
-AddDataDialog::AddDataDialog(DataStorage *dataMap, QWidget *parent) :
+AddDataDialog::AddDataDialog(QString date, QString income,
+                             QString consumption, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AddDataDialog)
 {
-    dateRegExp.setPattern("");
+    QRegularExpression digitRegExp;
+    digitRegExp.setPattern("^(?:0|[1-9]/d*)(?:[.,]/d+)?$)");
+    digitValidator = new QRegularExpressionValidator(digitRegExp);
+
+
     ui->setupUi(this);
+    ui->dateLineEdit->text() = date;
+    ui->incomeLineEdit->text() = income;
+    ui->consumptionLineEdit->text() = consumption;
     ui->dateLineEdit->setPlaceholderText("ДД-ММ-ГГГГ");
     connect(ui->dateLineEdit, &QLineEdit::editingFinished,
             this, &AddDataDialog::DateEdit);
@@ -19,8 +27,6 @@ AddDataDialog::AddDataDialog(DataStorage *dataMap, QWidget *parent) :
     connect(ui->consumptionLineEdit, &QLineEdit::textChanged,
             this, &AddDataDialog::on_changed);
 
-    //connect(ui->buttonBox, SIGNAL(accept()), this, SLOT(on_buttonBox_accepted(DataStorage*)));
-    //[this, &dataMap](){DateEdit(dataMap);}
 }
 
 AddDataDialog::~AddDataDialog()
@@ -30,7 +36,10 @@ AddDataDialog::~AddDataDialog()
 
 void AddDataDialog::on_buttonBox_accepted()
 {
-    //emit sendData(_stringList);
+    ui->dateLineEdit->clear();
+    ui->incomeLineEdit->clear();
+    ui->consumptionLineEdit->clear();
+    ui->totalLineEdit->clear();
     emit sendData(currentDate, currentIncome, currentConsumption);
 }
 
@@ -39,7 +48,6 @@ void AddDataDialog::DateEdit()
     try
     {
         currentDate = QDate::fromString(ui->dateLineEdit->text(), "dd-MM-yyyy");
-        //dataMap->SetDate(currentDate);
     }
     catch(std::invalid_argument)
     {
@@ -49,12 +57,10 @@ void AddDataDialog::DateEdit()
 
 void AddDataDialog::IncomeEdit()
 {
-
+    ui->totalLineEdit->setValidator(digitValidator);
     try
     {
         currentIncome = ui->incomeLineEdit->text().toDouble();
-        //dataMap->SetIncome(currentDate,ui->incomeLineEdit->text().toDouble());
-        //emit dataMap->SetIncome(currentDate, ui->incomeLineEdit->text().toDouble());
     }
     catch(std::invalid_argument)
     {
@@ -67,8 +73,6 @@ void AddDataDialog::ConsumptionEdit()
     try
     {
         currentConsumption = ui->consumptionLineEdit->text().toDouble();
-        //dataMap->SetIncome(currentDate,ui->incomeLineEdit->text().toDouble());
-        //emit dataMap->SetIncome(currentDate, ui->incomeLineEdit->text().toDouble());
     }
     catch(std::invalid_argument)
     {

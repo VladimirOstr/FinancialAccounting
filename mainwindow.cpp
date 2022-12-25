@@ -60,30 +60,28 @@ MainWindow::MainWindow(DataStorage *data, QWidget *parent)
             (QAction *action)
             {SelectMonth(action,data);});
 
-    AddDataDialog *addDataDialog = new AddDataDialog(data);
-    //addDataDialog->setModal(true);
+    AddDataDialog *addDataDialog = new AddDataDialog("","","");
     _guideWindow = new GuideWindow();
-    _guideWindow->setModal(true);
     _aboutWindow = new AboutWindow();
-    _aboutWindow->setModal(true);
 
-    connect(ui->addDataAction, SIGNAL(triggered()),
-            addDataDialog, SLOT(exec()));
-    connect(ui->tableWidget, SIGNAL(cellDoubleClicked(int,int)),
-            addDataDialog, SLOT(exec()));
-    connect(ui->guideAction, SIGNAL(triggered()),
-            _guideWindow, SLOT(show()));
-    connect(ui->aboutAction, SIGNAL(triggered()),
-            _aboutWindow, SLOT(show()));
+    connect(ui->addDataAction, &QAction::triggered,
+            addDataDialog, &AddDataDialog::exec);
+    /*connect(ui->tableWidget, &QTableWidget::cellDoubleClicked,
+            addDataDialog, [this](int row, int column,AddDataDialog *Edit)
+            {Edit = new AddDataDialog(ui->tableWidget->item(0,0)->text(),
+                                 ui->tableWidget->item(0,1)->text(),
+                                 ui->tableWidget->item(0,2)->text());
+                                 Edit->exec();});*/
+    connect(ui->guideAction, &QAction::triggered,
+            _guideWindow, &GuideWindow::exec);
+    connect(ui->aboutAction, &QAction::triggered,
+            _aboutWindow, &AboutWindow::exec);
 
     connect(addDataDialog, &AddDataDialog::sendData,
             this, [this, &data]
             (QDate date, double income, double consumption)
             {ReceiveData(date,income,consumption,data);});
 
-
-    //connect(addDataDialog, SIGNAL(sendData(QStringList*)),
-            //this, SLOT(recieveData(QStringList*)));
 }
 
 MainWindow::~MainWindow()
@@ -99,6 +97,7 @@ void MainWindow::SelectMonth(QAction *action, DataStorage* data)
         case 0:
         {
             baseDate.setDate(2022,1,1);
+            ClearTableWidgets();
             FillTableWidgets(data);
 
             break;
@@ -107,6 +106,7 @@ void MainWindow::SelectMonth(QAction *action, DataStorage* data)
         case 1:
         {
             baseDate.setDate(2022,2,1);
+            ClearTableWidgets();
             FillTableWidgets(data);
             break;
         }
@@ -114,6 +114,7 @@ void MainWindow::SelectMonth(QAction *action, DataStorage* data)
         case 2:
         {
             baseDate.setDate(2022,3,1);
+            ClearTableWidgets();
             FillTableWidgets(data);
             break;
         }
@@ -121,6 +122,7 @@ void MainWindow::SelectMonth(QAction *action, DataStorage* data)
         case 3:
         {
             baseDate.setDate(2022,4,1);
+            ClearTableWidgets();
             FillTableWidgets(data);
             break;
         }
@@ -128,6 +130,7 @@ void MainWindow::SelectMonth(QAction *action, DataStorage* data)
         case 4:
         {
             baseDate.setDate(2022,5,1);
+            ClearTableWidgets();
             FillTableWidgets(data);
             break;
         }
@@ -135,13 +138,16 @@ void MainWindow::SelectMonth(QAction *action, DataStorage* data)
         case 5:
         {
             baseDate.setDate(2022,6,1);
+            ClearTableWidgets();
             FillTableWidgets(data);
+
             break;
         }
 
         case 6:
         {
             baseDate.setDate(2022,7,1);
+            ClearTableWidgets();
             FillTableWidgets(data);
             break;
         }
@@ -149,6 +155,7 @@ void MainWindow::SelectMonth(QAction *action, DataStorage* data)
         case 7:
         {
             baseDate.setDate(2022,8,1);
+            ClearTableWidgets();
             FillTableWidgets(data);
             break;
         }
@@ -156,6 +163,7 @@ void MainWindow::SelectMonth(QAction *action, DataStorage* data)
         case 8:
         {
             baseDate.setDate(2022,9,1);
+            ClearTableWidgets();
             FillTableWidgets(data);
             break;
         }
@@ -163,6 +171,7 @@ void MainWindow::SelectMonth(QAction *action, DataStorage* data)
         case 9:
         {
             baseDate.setDate(2022,10,1);
+            ClearTableWidgets();
             FillTableWidgets(data);
             break;
         }
@@ -170,6 +179,7 @@ void MainWindow::SelectMonth(QAction *action, DataStorage* data)
         case 10:
         {
             baseDate.setDate(2022,11,1);
+            ClearTableWidgets();
             FillTableWidgets(data);
             break;
         }
@@ -177,6 +187,7 @@ void MainWindow::SelectMonth(QAction *action, DataStorage* data)
         case 11:
         {
             baseDate.setDate(2022,12,1);
+            ClearTableWidgets();
             FillTableWidgets(data);
             break;
         }
@@ -188,7 +199,8 @@ void MainWindow::FillTableWidgets(DataStorage *data)
     for (int i = 0; i < tableWidgets->count(); i++)
     {
         tableWidgets->at(i)->setItem(0,0, new QTableWidgetItem(baseDate.addDays(i).toString()));
-
+        QDate tableDate = QDate::fromString(tableWidgets->at(i)->item(0,0)->text());
+        //tableWidgets->at(i)->setItem(0,3, new QTableWidgetItem(QString::number(data->GetTotal(tableDate))));
 
         /*if(tableWidgets->at(i)->item(0,0)->text() == date.toString())
         {
@@ -202,7 +214,6 @@ void MainWindow::FillTableWidgets(DataStorage *data)
         }*/
         if (data->Contains(QDate::fromString(tableWidgets->at(i)->item(0,0)->text())))
         {
-            QDate tableDate = QDate::fromString(tableWidgets->at(i)->item(0,0)->text());
             tableWidgets->at(i)->setItem(0,1, new QTableWidgetItem(QString::number(data->GetIncome(tableDate))));
             tableWidgets->at(i)->setItem(0,2, new QTableWidgetItem(QString::number(data->GetConsumption(tableDate))));
             tableWidgets->at(i)->setItem(0,3, new QTableWidgetItem(QString::number(data->GetTotal(tableDate))));
@@ -211,6 +222,7 @@ void MainWindow::FillTableWidgets(DataStorage *data)
                 tableWidgets->at(j)->setItem(0,3, new QTableWidgetItem(QString::number(data->GetTotal(tableDate))));
             }
         }
+
     }
 
 }
@@ -219,4 +231,14 @@ void MainWindow::ReceiveData(QDate date, double income, double consumption, Data
 {
     data->AddIndicator(date,income,consumption);
     FillTableWidgets(data);
+}
+
+void MainWindow::ClearTableWidgets()
+{
+    for (int i = 0; i < tableWidgets->count(); i++)
+    {
+        tableWidgets->at(i)->setItem(0,1, new QTableWidgetItem("0"));
+        tableWidgets->at(i)->setItem(0,2, new QTableWidgetItem("0"));
+        tableWidgets->at(i)->setItem(0,3, new QTableWidgetItem("0"));
+    }
 }

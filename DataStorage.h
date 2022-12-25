@@ -16,7 +16,7 @@ public:
     double GetConsumption(QDate date);
     double GetTotal(QDate date);
     bool Contains(QDate date);
-
+    void CalculateTotal();
 
 private:
     QMap<QDate,FinancialIndicators> *_indicatorsMap;
