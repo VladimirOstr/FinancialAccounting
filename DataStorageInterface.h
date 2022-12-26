@@ -10,12 +10,6 @@ public:
     DataStorageInterface();
     virtual void SetIndicator(QDate date, double income, double consumption) = 0;
 
-public slots:
-    //void EditStorage();
-    //void ReceiveData();
-
-signals:
-    void SetIncome(QDate date, double income);
 
 };
 

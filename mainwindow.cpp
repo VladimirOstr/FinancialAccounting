@@ -193,8 +193,8 @@ void MainWindow::FillTableWidgets(DataStorage *data)
 {
     for (int i = 0; i < tableWidgets->count(); i++)
     {
-        tableWidgets->at(i)->setItem(0,0,
-                                     new QTableWidgetItem(baseDate.addDays(i).toString()));
+        tableWidgets->at(i)->setItem
+                (0,0,new QTableWidgetItem(baseDate.addDays(i).toString()));
         QDate tableDate = QDate::fromString(tableWidgets->at(i)->item(0,0)->text());
 
         if (data->Contains(QDate::fromString(tableWidgets->at(i)->item(0,0)->text())))

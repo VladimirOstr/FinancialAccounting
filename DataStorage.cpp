@@ -16,18 +16,6 @@ DataStorage::~DataStorage()
 void DataStorage::SetIndicator(QDate date, double income, double consumption)
 {
     FinancialIndicators *indicator = new FinancialIndicators(date, income, consumption);
-    /*if (_indicatorsMap->contains(date))
-    {
-        _indicatorsMap->insert(date,indicator);
-        QMap <QDate,FinancialIndicators*>::iterator it = _indicatorsMap->find(date);
-        it++;
-        for (it; it != _indicatorsMap->end()++; it++)
-        {
-            it.value()->ClearTotal();
-            it.value()->SetTotal(_indicatorsMap->find(date).value()->GetTotal());
-        }
-        return;
-    }*/
     _indicatorsMap->insert(date,indicator);
     QMap <QDate,FinancialIndicators*>::iterator it = _indicatorsMap->begin();
     double currentTotal = 0;
@@ -45,8 +33,6 @@ void DataStorage::SetIndicator(QDate date, double income, double consumption)
         it.value()->ClearTotal();
         it.value()->SetTotal(currentTotal);
         currentTotal = it.value()->GetTotal();
-        //currentTotal = it.value()->GetIncome() - it.value()->GetConsumption();
-        //currentTotal = it.value()->GetTotal();
     }
 }
 
