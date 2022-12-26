@@ -18,8 +18,7 @@ class AddDataDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddDataDialog(QString date, QString income,
-                           QString consumption, QWidget *parent = nullptr);
+    explicit AddDataDialog(QWidget *parent = nullptr);
     ~AddDataDialog();
 
 signals:
@@ -32,14 +31,14 @@ private slots:
 
 public slots:
     void on_buttonBox_accepted();
+    void on_buttonBox_rejected();
     void on_changed();
 
 private:
     Ui::AddDataDialog *ui;
-    QDate currentDate;
-    double currentIncome;
-    double currentConsumption;
-    QValidator *digitValidator;
+    QDate _currentDate;
+    double _currentIncome;
+    double _currentConsumption;
 };
 
 #endif // ADDDATADIALOG_H

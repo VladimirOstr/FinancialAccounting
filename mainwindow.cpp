@@ -54,13 +54,14 @@ MainWindow::MainWindow(DataStorage *data, QWidget *parent)
     monthMenu->addAction(months[9]);
     monthMenu->addAction(months[10]);
     monthMenu->addAction(months[11]);
+
     ui->toolButton->setMenu(monthMenu);
     connect(ui->toolButton, &QToolButton::triggered, monthMenu, &QMenu::show);
     connect(monthMenu, &QMenu::triggered, this, [this, &data]
             (QAction *action)
             {SelectMonth(action,data);});
 
-    AddDataDialog *addDataDialog = new AddDataDialog("","","");
+    AddDataDialog *addDataDialog = new AddDataDialog();
     _guideWindow = new GuideWindow();
     _aboutWindow = new AboutWindow();
 
@@ -192,28 +193,22 @@ void MainWindow::FillTableWidgets(DataStorage *data)
 {
     for (int i = 0; i < tableWidgets->count(); i++)
     {
-        tableWidgets->at(i)->setItem(0,0, new QTableWidgetItem(baseDate.addDays(i).toString()));
+        tableWidgets->at(i)->setItem(0,0,
+                                     new QTableWidgetItem(baseDate.addDays(i).toString()));
         QDate tableDate = QDate::fromString(tableWidgets->at(i)->item(0,0)->text());
-        //tableWidgets->at(i)->setItem(0,3, new QTableWidgetItem(QString::number(data->GetTotal(tableDate))));
 
-        /*if(tableWidgets->at(i)->item(0,0)->text() == date.toString())
-        {
-            tableWidgets->at(i)->setItem(0,1, new QTableWidgetItem(QString::number(data->GetIncome(date))));
-            tableWidgets->at(i)->setItem(0,2, new QTableWidgetItem(QString::number(data->GetConsumption(date))));
-            tableWidgets->at(i)->setItem(0,3, new QTableWidgetItem(QString::number(data->GetTotal(date))));
-            for (int j = i; j < tableWidgets->count(); j++)
-            {
-                tableWidgets->at(j)->setItem(0,3, new QTableWidgetItem(QString::number(data->GetTotal(date))));
-            }
-        }*/
         if (data->Contains(QDate::fromString(tableWidgets->at(i)->item(0,0)->text())))
         {
-            tableWidgets->at(i)->setItem(0,1, new QTableWidgetItem(QString::number(data->GetIncome(tableDate))));
-            tableWidgets->at(i)->setItem(0,2, new QTableWidgetItem(QString::number(data->GetConsumption(tableDate))));
-            tableWidgets->at(i)->setItem(0,3, new QTableWidgetItem(QString::number(data->GetTotal(tableDate))));
+            tableWidgets->at(i)->setItem
+                    (0,1, new QTableWidgetItem(QString::number(data->GetIncome(tableDate))));
+            tableWidgets->at(i)->setItem
+                    (0,2, new QTableWidgetItem(QString::number(data->GetConsumption(tableDate))));
+            tableWidgets->at(i)->setItem
+                    (0,3, new QTableWidgetItem(QString::number(data->GetTotal(tableDate))));
             for (int j = i; j < tableWidgets->count(); j++)
             {
-                tableWidgets->at(j)->setItem(0,3, new QTableWidgetItem(QString::number(data->GetTotal(tableDate))));
+                tableWidgets->at(j)->setItem
+                        (0,3, new QTableWidgetItem(QString::number(data->GetTotal(tableDate))));
             }
         }
 

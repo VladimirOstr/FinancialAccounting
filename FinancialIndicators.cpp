@@ -11,7 +11,7 @@ FinancialIndicators::FinancialIndicators(QDate date, double income,
 
 FinancialIndicators::FinancialIndicators()
 {
-    _date = QDate(2022, 1, 1);
+    _date = QDate(1970, 1, 1);
     _income = 0;
     _consumption = 0;
     _total = _income - _consumption;
@@ -55,4 +55,9 @@ double FinancialIndicators::GetIncome()
 double FinancialIndicators::GetConsumption()
 {
     return _consumption;
+}
+
+void FinancialIndicators::ClearTotal()
+{
+    _total = _income - _consumption;
 }

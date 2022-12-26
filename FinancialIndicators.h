@@ -17,6 +17,7 @@ public:
     double GetIncome();
     double GetConsumption();
     double GetTotal();
+    void ClearTotal();
 
 private:
     QDate _date;

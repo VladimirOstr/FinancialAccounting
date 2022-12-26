@@ -1,21 +1,16 @@
 #include "adddatadialog.h"
 #include "ui_adddatadialog.h"
 
-AddDataDialog::AddDataDialog(QString date, QString income,
-                             QString consumption, QWidget *parent) :
+AddDataDialog::AddDataDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AddDataDialog)
 {
-    QRegularExpression digitRegExp;
-    digitRegExp.setPattern("^(?:0|[1-9]/d*)(?:[.,]/d+)?$)");
-    digitValidator = new QRegularExpressionValidator(digitRegExp);
-
 
     ui->setupUi(this);
-    ui->dateLineEdit->text() = date;
-    ui->incomeLineEdit->text() = income;
-    ui->consumptionLineEdit->text() = consumption;
     ui->dateLineEdit->setPlaceholderText("ДД-ММ-ГГГГ");
+    ui->incomeLineEdit->setPlaceholderText("Только цифры. Разделять точкой");
+    ui->consumptionLineEdit->setPlaceholderText("Только цифры. Разделять точкой");
+    ui->totalLineEdit->setPlaceholderText("Итог. Только для чтения");
     connect(ui->dateLineEdit, &QLineEdit::editingFinished,
             this, &AddDataDialog::DateEdit);
     connect(ui->incomeLineEdit, &QLineEdit::editingFinished,
@@ -40,45 +35,59 @@ void AddDataDialog::on_buttonBox_accepted()
     ui->incomeLineEdit->clear();
     ui->consumptionLineEdit->clear();
     ui->totalLineEdit->clear();
-    emit sendData(currentDate, currentIncome, currentConsumption);
+    emit sendData(_currentDate, _currentIncome, _currentConsumption);
+}
+
+void AddDataDialog::on_buttonBox_rejected()
+{
+    ui->dateLineEdit->clear();
+    ui->dateLineEdit->setStyleSheet("background-color: white");
+    ui->incomeLineEdit->clear();
+    ui->incomeLineEdit->setStyleSheet("background-color: white");
+    ui->consumptionLineEdit->clear();
+    ui->consumptionLineEdit->setStyleSheet("background-color: white");
+    ui->totalLineEdit->clear();
 }
 
 void AddDataDialog::DateEdit()
 {
-    try
+    if (QDate::fromString(ui->dateLineEdit->text(), "dd-MM-yyyy").isValid())
     {
-        currentDate = QDate::fromString(ui->dateLineEdit->text(), "dd-MM-yyyy");
+        _currentDate = QDate::fromString(ui->dateLineEdit->text(), "dd-MM-yyyy");
+        ui->dateLineEdit->setStyleSheet("background-color: white");
+        ui->buttonBox->setDisabled(false);
+        return;
     }
-    catch(std::invalid_argument)
-    {
-        ui->dateLineEdit->setStyleSheet("background-color: red");
-    }
+    ui->dateLineEdit->setStyleSheet("background-color: rgb(255,64,64)");
+    ui->buttonBox->setDisabled(true);
 }
 
 void AddDataDialog::IncomeEdit()
 {
-    ui->totalLineEdit->setValidator(digitValidator);
-    try
+    QString string = ui->incomeLineEdit->text();
+    if (string.contains(QRegularExpression("^\\d+|\\w(.)\\d+$")))
     {
-        currentIncome = ui->incomeLineEdit->text().toDouble();
+        _currentIncome = ui->incomeLineEdit->text().toDouble();
+        ui->incomeLineEdit->setStyleSheet("background-color: white");
+        ui->buttonBox->setDisabled(false);
+        return;
     }
-    catch(std::invalid_argument)
-    {
-        ui->incomeLineEdit->setStyleSheet("background-color: red");
-    }
+    ui->incomeLineEdit->setStyleSheet("background-color: rgb(255,64,64)");
+    ui->buttonBox->setDisabled(true);
 }
 
 void AddDataDialog::ConsumptionEdit()
 {
-    try
+    QString string = ui->consumptionLineEdit->text();
+    if (string.contains(QRegularExpression("^\\d+|\\w(.)\\d+$")))
     {
-        currentConsumption = ui->consumptionLineEdit->text().toDouble();
+        _currentConsumption = ui->consumptionLineEdit->text().toDouble();
+        ui->consumptionLineEdit->setStyleSheet("background-color: white");
+        ui->buttonBox->setDisabled(false);
+        return;
     }
-    catch(std::invalid_argument)
-    {
-        ui->consumptionLineEdit->setStyleSheet("background-color: red");
-    }
-
+    ui->consumptionLineEdit->setStyleSheet("background-color: rgb(255,64,64)");
+    ui->buttonBox->setDisabled(true);
 }
 
 void AddDataDialog::on_changed()
