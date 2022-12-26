@@ -17,7 +17,7 @@ public:
     bool Contains(QDate date);
 
 private:
-    QMap<QDate,FinancialIndicators> *_indicatorsMap;
+    QMap<QDate,FinancialIndicators*> *_indicatorsMap;
 
 };
 
